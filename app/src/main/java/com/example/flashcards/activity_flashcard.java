@@ -88,8 +88,9 @@ public class activity_flashcard extends AppCompatActivity {
 
             for(int i=0;i<carreglo;i++){
                 tflash.setText(palabras[i]);
-                tflash.setText(" ");
                 mhandler.postDelayed(this,4000);
+                tflash.setText(" ");
+
             }
         }
     };
