@@ -3,46 +3,56 @@ package com.example.flashcards;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class activity_flashcard extends AppCompatActivity {
+
+    private Handler mhandler = new Handler();
     TextView tflash;
     Button bpreguntas;
-    String palabras[] = {"Clase","Perro","Gato","Casa","Celular"};
+    String palabras[] = {"Clase","Perro","Gato","Casa","Celular","ola","Carro"};
     Boolean repetir=true;
+    int carreglo=palabras.length;
 
-    int i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard);
         bpreguntas=(Button) findViewById(R.id.bpreguntas);
-        int carreglo=palabras.length;
+
         tflash = (TextView) findViewById(R.id.tflash);
 
 
-       /* for(i=0;i<=carreglo;i++){
+        mcicloflashcards.run();
+
+
+       /* for(i=0;i<carreglo;i++){
             tflash.setText(palabras[i]);
             tflash.setText(" ");
 
-        }*/
-
-
-
-
-
-
-
-
-
-
-        for (String i:palabras)
-        {
-            esperar(5);
-            tflash.setText(i);
-
         }
+
+
+
+         for (String i:palabras)
+            {
+
+                tflash.setText(i);
+                mhandler.postDelayed(this,4000);
+            }*/
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -63,13 +73,25 @@ public class activity_flashcard extends AppCompatActivity {
 
     }
 
-    public static void esperar(int segundos){
+    /*public static void esperar(int segundos){
         try {
             Thread.sleep(segundos * 1000);
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
+    }*/
 
+    private Runnable mcicloflashcards=new Runnable(){
+
+        @Override
+        public void run() {
+
+            for(int i=0;i<carreglo;i++){
+                tflash.setText(palabras[i]);
+                tflash.setText(" ");
+                mhandler.postDelayed(this,4000);
+            }
+        }
+    };
 
 }
