@@ -12,10 +12,11 @@ public class activity_flashcard extends AppCompatActivity {
     private Handler mhandler = new Handler();
     TextView tflash;
     Button bpreguntas;
+
     String palabras[] = {"Clase","Perro","Gato","Casa","Celular","ola","Carro"};
     Boolean repetir=true;
     int carreglo=palabras.length;
-
+    int i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +26,7 @@ public class activity_flashcard extends AppCompatActivity {
         tflash = (TextView) findViewById(R.id.tflash);
 
 
-        mcicloflashcards.run();
+        mhandler.postDelayed(mcicloflashcards,5000);
 
 
        /* for(i=0;i<carreglo;i++){
@@ -80,19 +81,36 @@ public class activity_flashcard extends AppCompatActivity {
             System.out.println(e);
         }
     }*/
+    private Runnable cambiar=new Runnable() {
+        @Override
+        public void run() {
+            if (i<carreglo){
+                i++;
+                mhandler.postDelayed(mcicloflashcards,1000);
+            }else{
+                i=0;
+                mhandler.postDelayed(mcicloflashcards,1000);
+            }
+
+        }
+
+
+    };
 
     private Runnable mcicloflashcards=new Runnable(){
 
         @Override
         public void run() {
-
-            for(int i=0;i<carreglo;i++){
                 tflash.setText(palabras[i]);
-                mhandler.postDelayed(this,4000);
-                tflash.setText(" ");
 
-            }
+                mhandler.postDelayed(cambiar,2000);
+
+
+
+
         }
     };
+
+
 
 }
