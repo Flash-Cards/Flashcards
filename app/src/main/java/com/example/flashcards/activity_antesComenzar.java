@@ -49,7 +49,7 @@ public class activity_antesComenzar extends AppCompatActivity {
         bempezar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(), activity_flashcard.class);
+                Intent intent = new Intent (v.getContext(), activity_seleccionarempezar.class);
                 startActivityForResult(intent, 0);
             }
         });

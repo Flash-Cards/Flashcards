@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class Lista_palabras extends AppCompatActivity {
     ListView lv1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,28 +31,18 @@ public class Lista_palabras extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-
-
             AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,"Palabras",null,1);
             SQLiteDatabase BaseDeDatabase = admin.getWritableDatabase();
 
-
-
-
-
-            Cursor fila = BaseDeDatabase.rawQuery("select * from palabras",null);
+            Cursor fila = BaseDeDatabase.rawQuery("select palabra from palabras",null);
             ArrayList<String> listapalabras = new ArrayList<>();
             if(fila.moveToFirst()){
-
                 do {
                     listapalabras.add(fila.getString(0));
 
                 } while(fila.moveToNext());
-
-
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.list_item_palabras, listapalabras);
                 lv1.setAdapter(adapter);
-
 
                 BaseDeDatabase.close();
             }else{

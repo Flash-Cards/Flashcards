@@ -35,22 +35,13 @@ public class Borrar_palabras extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
                 eliminar(parent.getItemAtPosition(position).toString());
-
-
-
 
             }
 
         });
 
-
-
-
     }
-
-
 
 
     public void consulta(){
@@ -77,9 +68,6 @@ public class Borrar_palabras extends AppCompatActivity {
 
         }
 
-
-
-
     }
 
 
@@ -87,9 +75,6 @@ public class Borrar_palabras extends AppCompatActivity {
     public void eliminar(String pa){
       AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,"Palabras",null,1);
          SQLiteDatabase BaseDeDatabase = admin.getWritableDatabase();
-
-
-
 
             int cant = BaseDeDatabase.delete("palabras", "palabra='" + pa+"'", null);
                 BaseDeDatabase.close();

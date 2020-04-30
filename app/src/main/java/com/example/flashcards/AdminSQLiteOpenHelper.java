@@ -15,7 +15,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase BaseDeDatos) {
-        BaseDeDatos.execSQL("create table palabras( palabra text)");
+        BaseDeDatos.execSQL("create table palabras( palabra text, seleccion integer default 0)");
     }
 
     @Override
