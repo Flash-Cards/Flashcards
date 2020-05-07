@@ -30,6 +30,10 @@ public class activity_flashcard extends AppCompatActivity {
     //int carreglo=palabras.length;
 
     public int i=0;
+
+    String mTiempoEnMilis;
+    long mTiempoEnMilis2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,14 @@ public class activity_flashcard extends AppCompatActivity {
         SQLiteDatabase BaseDeDatabase = admin.getWritableDatabase();
          //consulta
         Cursor fila = BaseDeDatabase.rawQuery("select palabra from palabras where seleccion = 1", null);
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            mTiempoEnMilis = extras.getString("segs");
+        }
+        long milisentrada = Long.parseLong(mTiempoEnMilis) * 1000;
+        establecerTiempo(milisentrada);
 
         if (fila.moveToFirst()) {
 
@@ -66,27 +78,7 @@ public class activity_flashcard extends AppCompatActivity {
             }
         });
 
-       mhandler.postDelayed(mcicloflashcards,5000);
-
-       /* for(i=0;i<carreglo;i++){
-            tflash.setText(palabras[i]);
-            tflash.setText(" ");
-
-        }
-         for (String i:palabras)
-            {
-
-                tflash.setText(i);
-                mhandler.postDelayed(this,4000);
-            }*/
-      /*if(repetir==true){
-            if(i<=carreglo){
-                tflash.setText(palabras[i]);
-                i++;
-            }else{
-                i=0;
-            }
-        }*/
+       mhandler.postDelayed(mcicloflashcards,1500);
     }
 
     private Runnable cambiar=new Runnable() {
@@ -112,12 +104,12 @@ public class activity_flashcard extends AppCompatActivity {
         public void run() {
                 tflash.setText(listapalabras.get(i).toString());
 
-                mhandler.postDelayed(cambiar,2000);
-
-
-
-
+                mhandler.postDelayed(cambiar,mTiempoEnMilis2);
         }
     };
+
+    public void establecerTiempo(long milisegundos) {
+        mTiempoEnMilis2 = milisegundos;
+    }
 
 }

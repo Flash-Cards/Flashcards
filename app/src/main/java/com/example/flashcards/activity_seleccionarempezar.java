@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +20,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class activity_seleccionarempezar extends AppCompatActivity {
-    Button bcomenzar;
+
+    Button bcomenzar,mButton1;
     ListView lv1;
 
-
-
+    public EditText mEditTextNum;
+    public TextView mTextViewNum;
 
    public int i=0;
     @Override
@@ -31,6 +33,10 @@ public class activity_seleccionarempezar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seleccionarempezar);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        mEditTextNum = findViewById(R.id.texto_editar);
+        mTextViewNum = findViewById(R.id.tiempo_muestra);
+        mButton1 = findViewById(R.id.set_text);
 
         bcomenzar = (Button) findViewById(R.id.bcomenzar);
         lv1 = (ListView) findViewById(R.id.lv1);
@@ -73,9 +79,22 @@ public class activity_seleccionarempezar extends AppCompatActivity {
         bcomenzar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity_seleccionarempezar.this, activity_flashcard.class);
+                String mTiempo = mEditTextNum.getText().toString();
 
+                mEditTextNum.setText("");
+
+                System.out.println(mTiempo);
+
+
+                Intent intent = new Intent(activity_seleccionarempezar.this, activity_flashcard.class);
+                intent.putExtra("segs",mTiempo);
                 startActivity(intent);
+            }
+        });
+
+        mButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
 
