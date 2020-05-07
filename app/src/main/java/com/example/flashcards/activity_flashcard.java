@@ -95,9 +95,10 @@ public class activity_flashcard extends AppCompatActivity {
             if (i<carreglo){
                 i++;
                 mhandler.postDelayed(mcicloflashcards,1000);
-            }else{
-                i=0;
-                mhandler.postDelayed(mcicloflashcards,1000);
+            }
+            if(i>=carreglo) {
+                i = 0;
+                mhandler.postDelayed(mcicloflashcards, 1000);
             }
 
         }
