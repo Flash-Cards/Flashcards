@@ -26,8 +26,8 @@ public class activity_seleccionarempezar extends AppCompatActivity {
 
     public EditText mEditTextNum;
     public TextView mTextViewNum;
-
-   public int i=0;
+    int cantidad;
+    public int i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +40,7 @@ public class activity_seleccionarempezar extends AppCompatActivity {
 
         bcomenzar = (Button) findViewById(R.id.bcomenzar);
         lv1 = (ListView) findViewById(R.id.lv1);
+        Deseleccionarpalabra();
 
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "Palabras", null, 1);
         SQLiteDatabase BaseDeDatabase = admin.getWritableDatabase();
@@ -84,11 +85,15 @@ public class activity_seleccionarempezar extends AppCompatActivity {
                 mEditTextNum.setText("");
 
                 System.out.println(mTiempo);
+                    if(cantidad>=1){
+                        Intent intent = new Intent(activity_seleccionarempezar.this, activity_flashcard.class);
+                        intent.putExtra("segs",mTiempo);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(v.getContext(),"No se seleccionaron palabras",Toast.LENGTH_SHORT).show();
+                    }
 
 
-                Intent intent = new Intent(activity_seleccionarempezar.this, activity_flashcard.class);
-                intent.putExtra("segs",mTiempo);
-                startActivity(intent);
             }
         });
 
@@ -112,13 +117,31 @@ public class activity_seleccionarempezar extends AppCompatActivity {
         ContentValues registro = new ContentValues();
         registro.put("seleccion",1);
 
-        int cantidad = BaseDeDatabase.update("palabras",registro,"palabra='"+Pselect+"'",null);
+        cantidad = BaseDeDatabase.update("palabras",registro,"palabra='"+Pselect+"'",null);
         BaseDeDatabase.close();
 
         if (cantidad==1){
             Toast.makeText(this, "Se ha selecciono la palabra", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(this, "Error al seleccionars", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error al seleccionar", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public void Deseleccionarpalabra(){
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "Palabras", null, 1);
+        SQLiteDatabase BaseDeDatabase = admin.getWritableDatabase();
+
+        ContentValues registro = new ContentValues();
+        registro.put("seleccion",0);
+
+        cantidad = BaseDeDatabase.update("palabras",registro,"seleccion='1'",null);
+        BaseDeDatabase.close();
+
+        if (cantidad==1){
+            Toast.makeText(this, "Se removieron las palabras seleccionadas", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Error al remover las palabras", Toast.LENGTH_SHORT).show();
         }
     }
 }
